@@ -9,12 +9,16 @@ contract LeoToken {
     string public symbol = 'LEO';
     uint8 public decimals = 18;
 
-    /* Start Methods */
+    mapping( address => uint256 ) public balanceOf;
+
+    constructor() {
+        balanceOf[msg.sender] = totalSupply();
+    }
+
     function totalSupply() public view returns ( uint256 ) {
         return 100_000 * ( 10 ** decimals );
     }
 
-    function balanceOf( address _owner ) public view returns ( uint256 balance );
     function transfer( address _to, uint256 __value ) public returns ( bool success );
     function transferFrom( address _from, address _to, uint256 _value ) public returns ( bool success );
     function approve( address _spender, uint256 _value ) public returns ( bool success );
