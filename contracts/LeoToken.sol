@@ -19,12 +19,19 @@ contract LeoToken {
         require( _address != ethers.constants.zeroAddress, 'Zero address is not allowed.' );
     }
 
+    modifier hasEnoughAmount( address _sender, uint256 _value ) {
+        require( balanceOf[ _sender ] >= _value, 'The sender does not have an enough amount' );
+    }
+
     function totalSupply() public view returns ( uint256 ) {
         return 100_000 * ( 10 ** decimals );
     }
 
-    function transfer( address _to, uint256 _value ) public nonZeroAddress ( _to ) _value returns ( bool success ) {
-        return;
+    function transfer( address _to, uint256 _value ) public nonZeroAddress ( _to ) hasEnoughAmount( msq.sender, _value ) returns ( bool success ) {
+        balanceOf[ _sender ] -= _value;
+        balanceOf[ _to ] += _value;
+        emit Transfer( _sender, _to, _value );
+        return true;
     }
 
     function transferFrom( address _from, address _to, uint256 _value ) public returns ( bool success );
