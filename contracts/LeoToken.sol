@@ -24,6 +24,10 @@ contract LeoToken {
         require( balanceOf[ _sender ] >= _value, 'The sender does not have an enough amount' );
     }
 
+    modifier hasEnoughAllowance( address _sender, address _receiver, uint256 _value ) {
+        require( allowance[ _sender ][ _receiver ] >= _value, 'Not allowed to transfer money' );
+    }
+
     function totalSupply() public view returns ( uint256 ) {
         return 100_000 * ( 10 ** decimals );
     }
@@ -41,7 +45,7 @@ contract LeoToken {
         return true;
     }
 
-    function transferFrom( address _from, address _to, uint256 _value ) nonZeroAddress( _from ) nonZeroAddress( _to ) hasEnoughAmount( _from, _value ) public returns ( bool success ) {
+    function transferFrom( address _from, address _to, uint256 _value ) nonZeroAddress( _from ) nonZeroAddress( _to ) hasEnoughAmount( _from, _value ) hasEnoughAllowance( _from, _to, _value ) public returns ( bool success ) {
         balanceOf[ _from ] -= _value;
         allowance[ _from ][ _to ] -= _value;
 
