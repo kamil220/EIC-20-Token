@@ -41,7 +41,14 @@ contract LeoToken {
         return true;
     }
 
-    function transferFrom( address _from, address _to, uint256 _value ) public returns ( bool success );
+    function transferFrom( address _from, address _to, uint256 _value ) nonZeroAddress( _from ) nonZeroAddress( _to ) hasEnoughAmount( _from, _value ) public returns ( bool success ) {
+        balanceOf[ _from ] -= _value;
+        allowance[ _from ][ _to ] -= _value;
+
+        balanceOf[ _to ] += _value;
+        emit Transfer( _from, _to, _value );
+        return true;
+    }
 
     /* Start Events */
     event Transfer( address indexed _from, address indexed _to, uint256 _value );
