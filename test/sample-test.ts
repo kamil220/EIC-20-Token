@@ -1,4 +1,4 @@
-const { expect } = require("chai");
+import { expect } = require("chai");
 const { ethers } = require("hardhat");
 
 describe("Greeter", function () {
