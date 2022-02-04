@@ -1,10 +1,13 @@
 {
   "extends": "solhint:recommended",
-  "__comment": "EIP-20 requires Solidity ^0.4.17",
   "plugins": [],
   "rules": {
     "avoid-suicide": "error",
     "avoid-sha3": "warn",
-    "compiler-version": ["error", "^0.4.17"]
+    "compiler-version": ["error", "0.8.0"],
+    "quotes": ["error", "single"],
+    "func-visibility": ["warn",{
+      "ignoreConstructors":true
+    }]
   }
 }

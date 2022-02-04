@@ -17,35 +17,44 @@ contract LeoToken {
     }
 
     modifier nonZeroAddress( address _address ) {
-        require( _address != ethers.constants.zeroAddress, 'Zero address is not allowed.' );
+        require( _address != address(0), 'Zero address is not allowed.' );
+        _;
     }
 
     modifier hasEnoughAmount( address _sender, uint256 _value ) {
-        require( balanceOf[ _sender ] >= _value, 'The sender does not have an enough amount' );
+        require( balanceOf[ _sender ] >= _value, 'Not enough money' );
+        _;
     }
 
     modifier hasEnoughAllowance( address _sender, address _receiver, uint256 _value ) {
         require( allowance[ _sender ][ _receiver ] >= _value, 'Not allowed to transfer money' );
+        _;
     }
 
     function totalSupply() public view returns ( uint256 ) {
         return 100_000 * ( 10 ** decimals );
     }
 
-    function transfer( address _to, uint256 _value ) public nonZeroAddress ( _to ) hasEnoughAmount( msq.sender, _value ) returns ( bool success ) {
-        balanceOf[ _sender ] -= _value;
+    function transfer( address _to, uint256 _value )
+    public nonZeroAddress ( _to ) hasEnoughAmount( msg.sender, _value )
+    returns ( bool success ) {
+        balanceOf[ msg.sender ] -= _value;
         balanceOf[ _to ] += _value;
-        emit Transfer( _sender, _to, _value );
+        emit Transfer( msg.sender, _to, _value );
         return true;
     }
 
-    function approve( address _spender, uint256 _value ) public nonZeroAddress( _spender ) _value returns ( bool success ) {
-        allowance[ msq.sender ][ _spender ] = _value;
-        emit Approval( msq.sender, _spender, _value );
+    function approve( address _spender, uint256 _value )
+    public nonZeroAddress( _spender )
+    returns ( bool success ) {
+        allowance[ msg.sender ][ _spender ] = _value;
+        emit Approval( msg.sender, _spender, _value );
         return true;
     }
 
-    function transferFrom( address _from, address _to, uint256 _value ) nonZeroAddress( _from ) nonZeroAddress( _to ) hasEnoughAmount( _from, _value ) hasEnoughAllowance( _from, _to, _value ) public returns ( bool success ) {
+    function transferFrom( address _from, address _to, uint256 _value )
+    public nonZeroAddress( _from ) nonZeroAddress( _to ) hasEnoughAmount( _from, _value ) hasEnoughAllowance( _from, _to, _value )
+    returns ( bool success ) {
         balanceOf[ _from ] -= _value;
         allowance[ _from ][ _to ] -= _value;
 
