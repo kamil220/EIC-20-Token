@@ -15,11 +15,18 @@ contract LeoToken {
         balanceOf[msg.sender] = totalSupply();
     }
 
+    modifier nonZeroAddress( address _address ) {
+        require( _address != ethers.constants.zeroAddress, 'Zero address is not allowed.' );
+    }
+
     function totalSupply() public view returns ( uint256 ) {
         return 100_000 * ( 10 ** decimals );
     }
 
-    function transfer( address _to, uint256 __value ) public returns ( bool success );
+    function transfer( address _to, uint256 _value ) public nonZeroAddress ( _to ) _value returns ( bool success ) {
+        return;
+    }
+
     function transferFrom( address _from, address _to, uint256 _value ) public returns ( bool success );
     function approve( address _spender, uint256 _value ) public returns ( bool success );
     function allowance( address _owner, address _spender ) public view returns ( uint256 remaining );
