@@ -10,6 +10,7 @@ contract LeoToken {
     uint8 public decimals = 18;
 
     mapping( address => uint256 ) public balanceOf;
+    mapping( address => mapping( address => uint256 ) ) public allowance;
 
     constructor() {
         balanceOf[msg.sender] = totalSupply();
@@ -34,9 +35,13 @@ contract LeoToken {
         return true;
     }
 
+    function approve( address _spender, uint256 _value ) public nonZeroAddress( _spender ) _value returns ( bool success ) {
+        allowance[ msq.sender ][ _spender ] = _value;
+        emit Approval( msq.sender, _spender, _value );
+        return true;
+    }
+
     function transferFrom( address _from, address _to, uint256 _value ) public returns ( bool success );
-    function approve( address _spender, uint256 _value ) public returns ( bool success );
-    function allowance( address _owner, address _spender ) public view returns ( uint256 remaining );
 
     /* Start Events */
     event Transfer( address indexed _from, address indexed _to, uint256 _value );
