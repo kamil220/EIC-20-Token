@@ -18,7 +18,7 @@ describe("LeoToken", function () {
         checkName: 'The name of token should be `Leocode Token`',
         checkSymbol: 'The symbol of token should be `LEO`',
         checkDecimals: 'The token should have 18 decimals',
-        checkTotalAmount: 'The total amount of token is wrong',
+        checkTotalAmount: 'Check total amount of token',
     };
 
     beforeEach( async() => {
@@ -28,19 +28,20 @@ describe("LeoToken", function () {
     });
 
     it( messages.checkName, async() => {
-       expect( await token.name().to.equal( 'Leocode Token' ) );
+        expect( await token.name() ).to.equal('Leocode Token' );
     });
 
     it( messages.checkSymbol, async() => {
-        expect( await token.symbol().to.equal( 'LEO' ) );
+        expect( await token.symbol() ).to.equal( 'LEO' );
     });
 
     it( messages.checkDecimals, async() => {
-        expect( await token.decimals().to.equal( decimals ) );
+        expect( await token.decimals() ).to.equal( decimals );
     })
 
     it( messages.checkTotalAmount, async() => {
        const total = await token.totalSupply();
-       expect( total.eq( totalAmount ).to.equal( true ))
+       expect( total.eq( totalAmount ) ).to.equal( true )
     });
+
 } );
