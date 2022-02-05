@@ -21,7 +21,8 @@ describe("LeoToken", function () {
         checkTotalAmount: 'Check total amount of token',
         checkSenderZeroAddress: 'Throw exception when sender address is null',
         checkReceiverZeroAddress: 'Throw exception when receiver address is null',
-
+        checkTransactionAllowance: 'Throw exception when transaction doens\'t have allowance',
+        checkNotEnoughTokens: 'Throw exception when sender doesn\'t have enough tokens'
     };
 
     beforeEach( async() => {
@@ -57,5 +58,16 @@ describe("LeoToken", function () {
         await expect( token.transferFrom( senderAddress, zeroAddress, 1 ) ).to.be.revertedWith( messages.errorZeroAddress );
     });
 
+    it( messages.checkTransactionAllowance, async() => {
+        const [{address: senderAddress}, {address: receiverAddress}] = await ethers.getSigners();
+
+        await token.transfer( senderAddress, 1 );
+        await expect( token.transferFrom( senderAddress, receiverAddress, 1 ) ).to.be.revertedWith( messages.errorNotAllowed );
+    })
+
+    it( messages.checkNotEnoughTokens, async() => {
+        const [{address: senderAddress}] = await ethers.getSigners();
+        await expect( token.transfer( senderAddress, totalAmount.add(1) ) ).to.be.revertedWith( messages.errorLackOfMoney );
+    });
 
 } );
