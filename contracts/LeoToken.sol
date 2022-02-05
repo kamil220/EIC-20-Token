@@ -17,17 +17,17 @@ contract LeoToken {
     }
 
     modifier nonZeroAddress( address _address ) {
-        require( _address != address(0), 'Zero address is not allowed.' );
+        require( _address != address(0), 'Zero address is not allowed' );
         _;
     }
 
     modifier hasEnoughAmount( address _sender, uint256 _value ) {
-        require( balanceOf[ _sender ] >= _value, 'Not enough money' );
+        require( balanceOf[ _sender ] >= _value, 'Not enough tokens' );
         _;
     }
 
     modifier hasEnoughAllowance( address _sender, address _receiver, uint256 _value ) {
-        require( allowance[ _sender ][ _receiver ] >= _value, 'Not allowed to transfer money' );
+        require( allowance[ _sender ][ _receiver ] >= _value, 'Not allowed to transfer tokens' );
         _;
     }
 
