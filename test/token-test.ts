@@ -3,7 +3,6 @@ import { Contract } from 'ethers';
 import {ethers} from 'hardhat';
 
 describe("LeoToken", function () {
-    let owner, notOwner;
     let token: Contract;
 
     const tokenCount = 100000;
