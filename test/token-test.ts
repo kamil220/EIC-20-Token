@@ -21,6 +21,7 @@ describe("LeoToken", function () {
         checkTotalAmount: 'Check total amount of token',
         checkSenderZeroAddress: 'Throw exception when sender address is null',
         checkReceiverZeroAddress: 'Throw exception when receiver address is null',
+
     };
 
     beforeEach( async() => {
@@ -47,13 +48,13 @@ describe("LeoToken", function () {
     });
 
     it( messages.checkReceiverZeroAddress, async() => {
-        await expect( token.transfer( zeroAddress, 1 ) ).to.be.revertedWith( 'Zero address is not allowed' );
+        await expect( token.transfer( zeroAddress, 1 ) ).to.be.revertedWith( messages.errorZeroAddress );
     });
 
     it( messages.checkSenderZeroAddress, async() => {
         const [{address: senderAddress}] = await ethers.getSigners();
 
-        await expect( token.transferFrom( senderAddress, zeroAddress, 1 ) ).to.be.revertedWith( 'Zero address is not allowed' );
+        await expect( token.transferFrom( senderAddress, zeroAddress, 1 ) ).to.be.revertedWith( messages.errorZeroAddress );
     });
 
 
