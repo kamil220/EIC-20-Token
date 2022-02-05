@@ -19,6 +19,8 @@ describe("LeoToken", function () {
         checkSymbol: 'The symbol of token should be `LEO`',
         checkDecimals: 'The token should have 18 decimals',
         checkTotalAmount: 'Check total amount of token',
+        checkSenderZeroAddress: 'Throw exception when sender address is null',
+        checkReceiverZeroAddress: 'Throw exception when receiver address is null',
     };
 
     beforeEach( async() => {
@@ -43,5 +45,16 @@ describe("LeoToken", function () {
        const total = await token.totalSupply();
        expect( total.eq( totalAmount ) ).to.equal( true )
     });
+
+    it( messages.checkReceiverZeroAddress, async() => {
+        await expect( token.transfer( zeroAddress, 1 ) ).to.be.revertedWith( 'Zero address is not allowed' );
+    });
+
+    it( messages.checkSenderZeroAddress, async() => {
+        const [{address: senderAddress}] = await ethers.getSigners();
+
+        await expect( token.transferFrom( senderAddress, zeroAddress, 1 ) ).to.be.revertedWith( 'Zero address is not allowed' );
+    });
+
 
 } );
