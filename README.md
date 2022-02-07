@@ -1,15 +1,35 @@
-# Basic Sample Hardhat Project
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+# ERC-20 Token with EIP-20 Standards
 
-Try running some of the following tasks:
+The project demonstrates a simple ERC-20 token based on EIP-20 standards. To create this project, I have used HardHard, Solidity, TypeScript, and TypeScript Mocha for tests.
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
+
+## Running Tests
+
+#### Solhint
+
+```bash
+yarn run solhint
 ```
+
+#### HardHat
+```bash
+hardhat test
+```
+
+#### HardHat & Solhint
+```bash
+yarn run test
+```
+## Tech Stack
+
+- Hardhat
+- Chai
+- Mocha
+- TypeScript
+- Ethers
+- Solhint
+
+## Author
+
+- [@kamil220](https://github.com/kamil220)
