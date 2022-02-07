@@ -1,8 +1,6 @@
 //SPDX-License-Identifier: Unlicensed
 pragma solidity ^0.8.0;
 
-import 'hardhat/console.sol';
-
 contract LeoToken {
 
     string public name = 'Leocode Token';
